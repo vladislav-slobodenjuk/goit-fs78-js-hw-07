@@ -2,8 +2,6 @@ import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 const galleryEl = document.querySelector(".gallery");
 
-// console.log(galleryItems);
-
 const markup = galleryItems
   .map((item) => {
     const { preview, original, description } = item;
@@ -26,24 +24,20 @@ let instance = {};
 
 function onImgClick(e) {
   e.preventDefault();
+  if (e.target.tagName !== "IMG") return;
+
   const source = e.target.dataset.source;
 
   instance = basicLightbox.create(`<img src=${source}>`, {
     onShow: () => document.addEventListener("keydown", onEscPress),
     onClose: () => document.removeEventListener("keydown", onEscPress),
   });
-  // instance.show(() => document.addEventListener("keydown", onEscPress));
   instance.show();
 }
 
 function onEscPress(e) {
-  console.log(e.code); // to check is listener present
-
-  if (e.code === "Escape") {
-    // instance.close(() => document.removeEventListener("keydown", onEscPress));
-    instance.close();
-  }
+  console.log(e.code); // to check is key listener present
+  if (e.code === "Escape") instance.close();
 }
 
 galleryEl.addEventListener("click", onImgClick);
-// ${}
