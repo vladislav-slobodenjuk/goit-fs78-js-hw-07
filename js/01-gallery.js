@@ -24,15 +24,18 @@ let instance = {};
 
 function onImgClick(e) {
   e.preventDefault();
-  if (e.target.tagName !== "IMG") return;
+  if (e.target.nodeName !== "IMG") return;
 
   const source = e.target.dataset.source;
+  instance = createInstance(source);
+  instance.show();
+}
 
-  instance = basicLightbox.create(`<img src=${source}>`, {
+function createInstance(src) {
+  return basicLightbox.create(`<img src=${src}>`, {
     onShow: () => document.addEventListener("keydown", onEscPress),
     onClose: () => document.removeEventListener("keydown", onEscPress),
   });
-  instance.show();
 }
 
 function onEscPress(e) {
