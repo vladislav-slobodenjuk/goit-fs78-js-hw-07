@@ -29,9 +29,8 @@ let instance = {};
 function onImgClick(e) {
   e.preventDefault();
 
-  // const isImage = e.target.nodeName === "IMG";
-  const isImage = e.target.classList.contains("gallery__image");
-  if (!isImage) return;
+  const isNotImage = e.target.nodeName !== "IMG";
+  if (isNotImage) return;
 
   const source = e.target.dataset.source;
   instance = createInstance(source);
@@ -40,8 +39,8 @@ function onImgClick(e) {
 
 function createInstance(src) {
   return basicLightbox.create(`<img src=${src}>`, {
-    onShow: () => document.addEventListener("keydown", onEscPress),
-    onClose: () => document.removeEventListener("keydown", onEscPress),
+    onShow: () => window.addEventListener("keydown", onEscPress),
+    onClose: () => window.removeEventListener("keydown", onEscPress),
   });
 }
 
